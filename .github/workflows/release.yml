@@ -14,6 +14,7 @@ jobs:
     - uses: actions/checkout@v4
 
     - run: |
+        docker login --user justm4d --password ${{ secrets.GH_PAT }} &&
         docker run --rm -v ${{ github.workspace }}:/ws ghcr.io/justm4d/kobra-framebuffer-vnc:latest /bin/bash -c "cd /ws && mkdir out && cp /workdir/build/framebuffer-vncserver /ws/out/framebuffer-vncserver"
 
     - name: Create release

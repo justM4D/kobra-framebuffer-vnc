@@ -1,0 +1,13 @@
+PROJECT(framebuffer-vncserver)
+CMAKE_MINIMUM_REQUIRED(VERSION 2.6)
+#set(BUILD_SHARED_LIBS OFF)
+
+FILE(GLOB SOURCES src/*.c)
+ADD_EXECUTABLE(framebuffer-vncserver ${SOURCES})
+INSTALL(TARGETS framebuffer-vncserver RUNTIME DESTINATION bin)
+
+# LIBVNC
+find_library(LIBVNC NAMES libvncserver vncserver)
+target_link_libraries(framebuffer-vncserver ${LIBVNC} -static)
+
+MESSAGE( STATUS "LIBVNC:         " ${LIBVNC} )

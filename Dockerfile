@@ -11,5 +11,5 @@ WORKDIR /workdir
 
 RUN mkdir -p build
 WORKDIR /workdir/build
-RUN cmake --trace ..
+RUN cmake -DBUILD_SHARED_LIBS=OFF ..
 RUN make

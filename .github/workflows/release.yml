@@ -1,0 +1,29 @@
+name: Auto release on tag
+
+on:
+  push:
+    tags:
+      - '*'
+  
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - run: |
+        docker run --rm -v ${{ github.workspace }}:/ws ghcr.io/justm4d/kobra-framebuffer-vnc:latest /bin/bash -c "cd /ws && mkdir out && cp /workdir/build/framebuffer-vncserver /ws/out/framebuffer-vncserver"
+
+    - name: Create release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GH_RELEASE_TOKEN }}
+        tag: ${{ github.ref_name }}
+      run: |
+        gh release create "$tag" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${GITHUB_REPOSITORY#*/} ${tag}" \
+            --generate-notes \
+            --draft \
+            out/framebuffer-vncserver

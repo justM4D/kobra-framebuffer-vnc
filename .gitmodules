@@ -1,0 +1,3 @@
+[submodule "framebuffer-vncserver"]
+	path = framebuffer-vncserver
+	url = https://github.com/ponty/framebuffer-vncserver.git
